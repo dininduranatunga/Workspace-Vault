@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>APEX Workspace Vault</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="titlebar">
+      <div class="title">APEX Workspace Vault</div>
+      <div class="info">!
+        <div class="tooltip">
+          <strong>Storage & sharing</strong><br><br>
+          • Saves data in this browser using <b>localStorage</b> (per device + per browser).<br>
+          • <b>Export</b> creates a JSON backup file on your PC.<br>
+          • <b>Import</b> can <b>Merge</b> (auto-combine) or <b>Replace</b> your current list.<br><br>
+          <strong>Auto-merge JSON</strong><br>
+          When you import a file from another user, the app combines both lists and removes duplicates (same Workspace + Username + Link). If both have the same entry, it keeps the newest one.<br><br>
+          <strong>Tip</strong><br>
+          If two users are sharing, you can both Export, then one person Import → Merge to combine.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="topbar">
+        <div></div>
+        <div class="btnrow">
+          <button id="toggle-form" class="primary">➕ Add Entry</button>
+          <button id="export-btn" class="outline">⬇️ Export</button>
+          <button id="import-btn" class="outline">⬆️ Import</button>
+          <button id="clear-all" class="danger">🧹 Clear All</button>
+        </div>
+      </div>
+
+      <input id="import-file" type="file" accept="application/json" style="display:none;" />
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="card" id="form-card" style="display:none;">
+      <form id="entry-form">
+        <div class="form-grid">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" required />
+          </div>
+          <div>
+            <label for="link">APEX Link (URL)</label>
+            <input type="url" id="link" placeholder="https://..." required />
+          </div>
+          <div>
+            <label for="workspace">Workspace</label>
+            <input type="text" id="workspace" required />
+          </div>
+          <div>
+            <label for="username">User Name</label>
+            <input type="text" id="username" required />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" required />
+          </div>
+        </div>
+        <div class="actions">
+          <button type="reset" class="outline">Clear</button>
+          <button type="submit" class="primary">💾 Save Entry</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card table-card">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 26%;">Name / Link</th>
+            <th style="width: 18%;">Workspace</th>
+            <th style="width: 18%;">User</th>
+            <th style="width: 18%;">Password</th>
+            <th style="width: 20%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="entries-body"></tbody>
+      </table>
+      <div id="empty-state" class="empty" style="display:none;">
+        No entries yet. Click “Add Entry” to create your first one. 🚀
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h3>Import options</h3>
+      <p>
+        Choose how to apply the imported JSON file:
+        <br>• <b>Merge</b>: combine both lists (auto-remove duplicates)
+        <br>• <b>Replace</b>: overwrite your current list
+      </p>
+      <div class="row">
+        <button id="modal-cancel" class="outline">Cancel</button>
+        <button id="modal-replace" class="danger">Replace</button>
+        <button id="modal-merge" class="primary">Merge</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
